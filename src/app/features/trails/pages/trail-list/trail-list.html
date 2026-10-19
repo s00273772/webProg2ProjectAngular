@@ -1,1 +1,11 @@
-<p>trail-list works!</p>
+<h2>Trail List</h2>
+@if (trails$ | async; as trails){
+    <ul>
+        @for (trail of trails; track trail._id){
+            <li>{{trail.trailName}} {{trail._id}}</li>
+        }
+    </ul>
+}
+@else{
+    Loading trails...
+}

@@ -12,3 +12,8 @@ export interface Trail {
     rating?: number;
     picture?: string;
 }
+
+//ChatGPT needed to create an interface for the trails object as the trails are stored inside a trails object
+export interface TrailList{
+    trails: Trail[];
+}
