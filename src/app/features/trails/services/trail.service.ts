@@ -18,4 +18,8 @@ export class TrailService {
     return this.http.get<TrailList>(this.apiUrl).pipe(
     map(response => response.trails));
   }
+
+  getTrailById(id: string): Observable<Trail>{
+    return this.http.get<Trail>(`${this.apiUrl}/${id}`);
+  }
 }

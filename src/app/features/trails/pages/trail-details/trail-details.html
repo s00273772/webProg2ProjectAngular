@@ -1,0 +1,6 @@
+@if(trail$ | async; as trail){
+   {{trail.trailName}} - {{trail.country}}
+}
+@else{
+    <p>Loading trail details...</p>
+}
