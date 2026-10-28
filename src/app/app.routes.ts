@@ -1,3 +1,15 @@
 import { Routes } from '@angular/router';
+import { TrailList } from './features/trails/pages/trail-list/trail-list';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+
+    {
+        path: '',
+        redirectTo: 'trails',
+        pathMatch: 'full'
+    },
+    {
+        path: 'trails',
+        component: TrailList
+    },
+];
