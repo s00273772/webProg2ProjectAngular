@@ -1,10 +1,10 @@
 <h2>Trail List</h2>
 @if (trails$ | async; as trails){
-    <ul>
+    <div class="grid">
         @for (trail of trails; track trail._id){
-            <li>{{trail.trailName}} {{trail._id}}</li>
+            <app-trail-card [trail]="trail"/>
         }
-    </ul>
+    </div>
 }
 @else{
     Loading trails...
