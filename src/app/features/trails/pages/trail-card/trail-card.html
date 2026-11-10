@@ -1,11 +1,7 @@
 <div class="card">
     <h3>
-        {{trail().trailName}} {{trail().hiked}}
+        {{trail().trailName}} 
     </h3>
-
-    @if(trail().dateHiked){
-        <p>Date hiked: {{trail().dateHiked}}</p>
-    }
 
     <a [routerLink]="['/trails', trail()._id]">View trail details</a>
 </div>

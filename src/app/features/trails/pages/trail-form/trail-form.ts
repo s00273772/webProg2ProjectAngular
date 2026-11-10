@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
   templateUrl: './trail-form.html',
   styleUrl: './trail-form.scss',
 })
+
+
+//I had to use ChatGPT to help me figure out how to include the locationCoordinates in the form
 export class TrailForm {
   private formBuilder = inject(FormBuilder);
   private trailService = inject(TrailService);
@@ -21,11 +24,7 @@ export class TrailForm {
     longitude: [''],
     latitude: [''],
     country: ['', Validators.required],
-    difficultyLevel: ['', Validators.required],
-    hiked: [false, Validators.required],
-    dateHiked: [''],
-    rating: [''],
-    picture: ['']
+    difficultyLevel: ['', Validators.required]
   });
 
   //use lat and long and set values in on submit using trailForm.value
@@ -42,11 +41,7 @@ export class TrailForm {
         coordinates: [Number(form.longitude), Number(form.latitude)]
       },
       country: form.country ?? '',
-      difficultyLevel: form.difficultyLevel ?? '',
-      hiked: form.hiked ?? false,
-      dateHiked: form.dateHiked ? new Date(form.dateHiked) : undefined,
-      rating: Number(form.rating),
-      picture: form.picture ?? ''
+      difficultyLevel: form.difficultyLevel ?? ''
 
     }
     console.log('Submitted Trail:', trailData);
