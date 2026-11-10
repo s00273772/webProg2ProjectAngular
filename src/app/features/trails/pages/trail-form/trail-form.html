@@ -1,0 +1,68 @@
+<form [formGroup]="trailForm" (ngSubmit)="onSubmit()" class="car-form">
+    <h2>Add New Trail</h2>
+
+    <div class="form-group">
+        <label for="trailName">Trail name: </label>
+        <input id="trailName" type="trailName" formControlName="trailName" placeholder="e.g. Knocknarea"/>
+    </div>
+
+
+    <div class="form-group">
+        <label for="longitude">Longitude: </label>
+        <input id="longitude" type="longitude" formControlName="longitude" placeholder="e.g. -8.5745"/>
+    </div>
+    <div class="form-group">
+        <label for="latitude">Latitude: </label>
+        <input id="latitude" type="latitude" formControlName="latitude" placeholder="e.g. 54.2589"/>
+    </div>
+    
+    
+    <div class="form-group">
+        <label for="country">Country: </label>
+        <input id="country" type="country" formControlName="country" placeholder="e.g. Ireland"/>
+    </div>
+
+    <div class="form-group">
+        <label for="difficultyLevel">Difficulty level: </label>
+        <select  id="difficultyLevel" type="difficultyLevel" formControlName="difficultyLevel">
+            <option value="Easy">Easy</option>
+            <option value="Moderate">Moderate</option>
+            <option value="Strenuous">Strenuous</option>
+            <option value="Extreme">Extreme</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="hiked">Have you hiked this trail?: </label>
+        <select id="hiked" type="hiked" formControlName="hiked">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="dateHiked">Date Hiked: </label>
+        <input id="dateHiked" type="date" formControlName="dateHiked"/>
+    </div>
+
+    <div class="form-group">
+        <label for="rating">Rating: </label>
+        <select id="rating" type="rating" formControlName="rating">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="picture">Picture URL: </label>
+        <input id="picture" type="picture" formControlName="picture"/>
+    </div>
+
+    <div class="button-group">
+        <button type="Submit">Save new trail</button>
+    </div>
+
+</form>

@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import { Trail, TrailList } from '../models/trail.model';
 import { map } from 'rxjs';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,5 +22,29 @@ export class TrailService {
 
   getTrailById(id: string): Observable<Trail>{
     return this.http.get<Trail>(`${this.apiUrl}/${id}`);
+  }
+
+  addTrail(trail: Trail): Observable<Trail>{
+    return this.http.post<Trail>(this.apiUrl, trail)
+    .pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  private handleError(error: HttpErrorResponse){
+        if (error.status === 0) {
+      console.error('An error occurred:', error.error);
+    } else {
+      if (error.status == 401 || error.status == 403) {
+
+        console.error('authorisation issue ' , error.status );
+         return throwError(() => new Error('You are not authorised for that action'));
+
+      }
+      console.error(
+        `Backend returned code ${error.status}, body was: `, error.error);
+    }
+    return throwError(() => new Error('Something bad happened; please try again later.'));
+
   }
 }
