@@ -53,7 +53,7 @@ export class TrailService {
         message = 'You are not allowed to do that.';
         break;
       case 404:
-        message = 'That car could not be found.';
+        message = 'That trail could not be found.';
         break;
       default:
         message = 'Something went wrong on the server. Please try again later.';

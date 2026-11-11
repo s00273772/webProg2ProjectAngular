@@ -6,15 +6,16 @@
         <input id="trailName" type="trailName" formControlName="trailName" placeholder="e.g. Knocknarea"/>
     </div>
 
+     <div class="form-group">
+        <label for="latitude">Latitude: </label>
+        <input id="latitude" type="latitude" formControlName="latitude" placeholder="e.g. 54.2589"/>
+    </div>
 
     <div class="form-group">
         <label for="longitude">Longitude: </label>
         <input id="longitude" type="longitude" formControlName="longitude" placeholder="e.g. -8.5745"/>
     </div>
-    <div class="form-group">
-        <label for="latitude">Latitude: </label>
-        <input id="latitude" type="latitude" formControlName="latitude" placeholder="e.g. 54.2589"/>
-    </div>
+   
     
     
     <div class="form-group">
@@ -32,8 +33,14 @@
         </select>
     </div>
 
+    @if(saveError(); as message){
+        <p role="alert">{{message}}</p>
+    }
+
     <div class="button-group">
-        <button type="Submit">Save new trail</button>
+        <button type="Submit" [disabled]="saving()">
+            {{ saving() ? 'Saving...' : 'Save new trail'}}</button>
+            <a routerLink="/trails">Cancel</a>
     </div>
 
 </form>

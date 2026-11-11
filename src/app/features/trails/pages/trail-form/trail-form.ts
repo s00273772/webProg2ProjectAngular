@@ -1,13 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Trail } from '../../models/trail.model';
+import { CreateTrailDto, Trail } from '../../models/trail.model';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TrailService } from '../../services/trail.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-trail-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './trail-form.html',
   styleUrl: './trail-form.scss',
 })
@@ -19,6 +19,9 @@ export class TrailForm {
   private trailService = inject(TrailService);
   private router = inject(Router);
 
+  saving = signal(false);
+  saveError = signal<string | null>(null);
+
   trailForm = this.formBuilder.nonNullable.group({
     trailName: ['', Validators.required],
     longitude: [''],
@@ -27,32 +30,37 @@ export class TrailForm {
     difficultyLevel: ['', Validators.required]
   });
 
+  //I asked ChatGPT how to save locationCoordinates using the form
   //use lat and long and set values in on submit using trailForm.value
   onSubmit(): void{
-    //const trailName = this.trailForm.value.trailName;
-    //console.log("Trail name", trailName);
-    //const trailData: Trail = this.trailForm.value as Trail;
-    const form = this.trailForm.value;
     
-    const trailData: Trail = {
+    const {trailName, latitude, longitude, country, difficultyLevel} = this.trailForm.getRawValue();
+    
+   
+    
+    const newTrail: CreateTrailDto = {
       
-      trailName: form.trailName ?? '',
+      trailName: trailName ?? '',
       locationCoordinates: {
         type: 'Point',
-        coordinates: [Number(form.longitude), Number(form.latitude)]
+        coordinates: [Number(longitude), Number(latitude)]
       },
-      country: form.country ?? '',
-      difficultyLevel: form.difficultyLevel ?? ''
+      country: country ?? '',
+      difficultyLevel: difficultyLevel ?? ''
 
-    }
-    console.log('Submitted Trail:', trailData);
+    };
 
-    this.trailService.addTrail(trailData).subscribe({
+    this.saving.set(true);
+    this.saveError.set(null);
+
+    this.trailService.addTrail(newTrail).subscribe({
       next: (response) => {
         console.log('Trail Added successfully:', response);
+        this.router.navigate(['/trails']);
       },
       error: (error) => {
-        console.error('Error adding trail:', error)
+        this.saveError.set(error.message);
+        this.saving.set(false);
       }
     });
 
