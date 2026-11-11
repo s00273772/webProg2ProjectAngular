@@ -1,36 +1,72 @@
 <form [formGroup]="trailForm" (ngSubmit)="onSubmit()" class="car-form">
+    
+      @if (saving()) {
+        <mat-progress-bar mode="buffer" />
+        }
+
+
     <h2>Add New Trail</h2>
 
     <div class="form-group">
-        <label for="trailName">Trail name: </label>
-        <input id="trailName" type="trailName" formControlName="trailName" placeholder="e.g. Knocknarea"/>
-    </div>
+        <mat-form-field appearance="outline">
+            <mat-label>Trail name</mat-label>
+            <input matInput formControlName="trailName" placeholder="e.g. Knocknarea"/>
 
-     <div class="form-group">
-        <label for="latitude">Latitude: </label>
-        <input id="latitude" type="latitude" formControlName="latitude" placeholder="e.g. 54.2589"/>
+            @if(trailForm.controls.trailName.hasError('required')){
+                <mat-error>Trail name is required</mat-error>
+            }
+            @else if(trailForm.controls.trailName.hasError('minlength')){
+                <mat-error>Trail name must be at least one character</mat-error>
+            }
+        </mat-form-field>
     </div>
 
     <div class="form-group">
-        <label for="longitude">Longitude: </label>
-        <input id="longitude" type="longitude" formControlName="longitude" placeholder="e.g. -8.5745"/>
+        <mat-form-field appearance="outline">
+            <mat-label>Longitude</mat-label>
+            <input matInput type="number" formControlName="longitude" placeholder="e.g. -8.5745"/>
+            <mat-hint>Optional</mat-hint>
+        </mat-form-field>
     </div>
-   
+
+    <div class="form-group">
+        <mat-form-field appearance="outline">
+            <mat-label>Latitude</mat-label>
+            <input matInput type="number" formControlName="latitude" placeholder="e.g. 54.2589"/>
+            <mat-hint>Optional</mat-hint>
+        </mat-form-field>
+    </div>
+
     
     
     <div class="form-group">
-        <label for="country">Country: </label>
-        <input id="country" type="country" formControlName="country" placeholder="e.g. Ireland"/>
+        <mat-form-field appearance="outline">
+            <mat-label>Country</mat-label>
+            <input matInput formControlName="country" placeholder="e.g. Ireland"/>
+            
+            @if(trailForm.controls.country.hasError('required')){
+                <mat-error>Country is required</mat-error>
+            }
+            @else if(trailForm.controls.country.hasError('minlength')){
+                <mat-error>Country must be at least one character</mat-error>
+            }
+        </mat-form-field>
     </div>
 
     <div class="form-group">
-        <label for="difficultyLevel">Difficulty level: </label>
-        <select  id="difficultyLevel" type="difficultyLevel" formControlName="difficultyLevel">
-            <option value="Easy">Easy</option>
-            <option value="Moderate">Moderate</option>
-            <option value="Strenuous">Strenuous</option>
-            <option value="Extreme">Extreme</option>
-        </select>
+        <mat-form-field appearance="outline">
+            <mat-label>Difficulty level</mat-label>
+            <mat-select formControlName="difficultyLevel">
+                <mat-option value="Easy">Easy</mat-option>
+                <mat-option value="Moderate">Moderate</mat-option>
+                <mat-option value="Strenuous">Strenuous</mat-option>
+                <mat-option value="Extreme">Extreme</mat-option>
+            </mat-select>
+            
+            @if(trailForm.controls.difficultyLevel.hasError('required')){
+                <mat-error>Difficulty level is required</mat-error>
+            }
+        </mat-form-field>
     </div>
 
     @if(saveError(); as message){
@@ -38,9 +74,9 @@
     }
 
     <div class="button-group">
-        <button type="Submit" [disabled]="saving()">
+        <button matButton="filled" type="Submit" [disabled]="saving()  || trailForm.invalid">
             {{ saving() ? 'Saving...' : 'Save new trail'}}</button>
-            <a routerLink="/trails">Cancel</a>
+            <a matButton routerLink="/trails">Cancel</a>
     </div>
 
 </form>
