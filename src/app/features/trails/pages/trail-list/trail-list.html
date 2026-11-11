@@ -1,11 +1,20 @@
-<h2>Trail List</h2>
-@if (trails$ | async; as trails){
+<div class="trail-list-container">
+    <h2>Trail List</h2>
+    
+    @let s = state();
+  @if (s.status === 'loading') {
+    <p>Loading trails...</p>
+  } @else if (s.status === 'error') {
+    <p> {{ s.message }}</p>
+  } @else if (s.data.length === 0) {
+    <p>No trails available at the moment.</p>
+  } @else {
     <div class="grid">
-        @for (trail of trails; track trail._id){
-            <app-trail-card [trail]="trail"/>
-        }
+      @for (trail of s.data; track trail._id) {
+        <app-trail-card [trail]="trail" />
+      }
     </div>
-}
-@else{
-    Loading trails...
-}
+  }
+
+</div>
+

@@ -2,8 +2,12 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TrailService } from '../../services/trail.service';
 import { Trail } from '../../models/trail.model';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { input } from '@angular/core';
+import { LoadState } from '../../../../shared/load-state';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { withLoadState } from '../../../../shared/load-state';
 
 @Component({
   selector: 'app-trail-details',
@@ -11,20 +15,21 @@ import { AsyncPipe } from '@angular/common';
   templateUrl: './trail-details.html',
   styleUrl: './trail-details.scss',
 })
-export class TrailDetails implements OnInit{
-  private route = inject(ActivatedRoute);
+export class TrailDetails{
+  
   private trailService = inject(TrailService);
 
-  trail$: Observable<Trail> | undefined
-  loading = true;
-  error = '';
+  readonly id = input.required<string>();
+  readonly initial: LoadState<Trail> = {status: 'loading'};
 
-  ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+  state = toSignal(
+    toObservable(this.id)
+    .pipe(
+      switchMap((id) => withLoadState(this.trailService.getTrailById(id))),
+    ),
+    {initialValue: this.initial},
+  );
 
-    if(id){
-      this.trail$ = this.trailService.getTrailById(id)
-    }
-  }
+  
 }
 

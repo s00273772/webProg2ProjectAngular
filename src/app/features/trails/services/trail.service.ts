@@ -17,18 +17,22 @@ export class TrailService {
 
   //ChatGPT needed to create an interface for the trails object as the trails are stored inside a trails object
   getTrails(): Observable<Trail[]>{
-    return this.http.get<TrailList>(this.apiUrl).pipe(
-    map(response => response.trails));
+    return this.http
+    .get<TrailList>(this.apiUrl)
+    .pipe(
+      map(response => response.trails),
+      catchError((err) => this.handleError(err)));
   }
 
   getTrailById(id: string): Observable<Trail>{
-    return this.http.get<Trail>(`${this.apiUrl}/${id}`);
+    return this.http.get<Trail>(`${this.apiUrl}/${id}`)
+    .pipe(catchError((err) => this.handleError(err)));
   }
 
   addTrail(trail: CreateTrailDto): Observable<Trail>{
     return this.http.post<Trail>(this.apiUrl, trail)
     .pipe(
-      catchError(this.handleError)
+      catchError((err) => this.handleError(err))
     )
   }
 

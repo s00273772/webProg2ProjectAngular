@@ -1,6 +1,12 @@
-@if(trail$ | async; as trail){
-   {{trail.trailName}} - {{trail.country}}
-}
-@else{
-    <p>Loading trail details...</p>
+<h2>Trail Details</h2>
+
+<p> Trail Id is {{id()}}</p>
+
+@let s = state();
+@if (s.status === 'loading') {
+  <p>Loading trail details...</p>
+} @else if (s.status === 'error') {
+  <p >{{ s.message }}</p>
+} @else {
+  <h2>{{ s.data.trailName }} {{ s.data.country }}</h2>
 }
