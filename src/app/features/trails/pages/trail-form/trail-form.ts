@@ -19,7 +19,7 @@ export class TrailForm {
   private trailService = inject(TrailService);
   private router = inject(Router);
 
-  trailForm = this.formBuilder.group({
+  trailForm = this.formBuilder.nonNullable.group({
     trailName: ['', Validators.required],
     longitude: [''],
     latitude: [''],
@@ -33,6 +33,7 @@ export class TrailForm {
     //console.log("Trail name", trailName);
     //const trailData: Trail = this.trailForm.value as Trail;
     const form = this.trailForm.value;
+    
     const trailData: Trail = {
       
       trailName: form.trailName ?? '',

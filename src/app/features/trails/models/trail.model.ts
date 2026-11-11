@@ -9,7 +9,19 @@ export interface Trail {
     difficultyLevel: string;
 }
 
+export interface CreateTrailDto{
+    trailName: string;
+    locationCoordinates?: {
+        type: "Point";
+        coordinates: [number, number] 
+    };
+    country: string;
+    difficultyLevel: string;
+}
+
 //ChatGPT needed to create an interface for the trails object as the trails are stored inside a trails object
 export interface TrailList{
     trails: Trail[];
 }
+
+

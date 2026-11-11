@@ -1,9 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
-import { Trail, TrailList } from '../models/trail.model';
+import { Trail, TrailList, CreateTrailDto } from '../models/trail.model';
 import { map } from 'rxjs';
 import { throwError } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root',
@@ -24,27 +25,37 @@ export class TrailService {
     return this.http.get<Trail>(`${this.apiUrl}/${id}`);
   }
 
-  addTrail(trail: Trail): Observable<Trail>{
+  addTrail(trail: CreateTrailDto): Observable<Trail>{
     return this.http.post<Trail>(this.apiUrl, trail)
     .pipe(
       catchError(this.handleError)
     )
   }
 
-  private handleError(error: HttpErrorResponse){
-        if (error.status === 0) {
-      console.error('An error occurred:', error.error);
-    } else {
-      if (error.status == 401 || error.status == 403) {
+  private handleError(error: HttpErrorResponse): Observable<never>{
+    let message: string;
 
-        console.error('authorisation issue ' , error.status );
-         return throwError(() => new Error('You are not authorised for that action'));
-
-      }
-      console.error(
-        `Backend returned code ${error.status}, body was: `, error.error);
+    switch(error.status){
+      case 0:
+        message = 'Cannot reach the server. Check that the API is running.';
+        break;
+      case 400:
+        message = 'Some of the data was not valid.';
+        break;
+      case 401:
+        message = 'Please log in to continue.';
+        break;
+      case 403:
+        message = 'You are not allowed to do that.';
+        break;
+      case 404:
+        message = 'That car could not be found.';
+        break;
+      default:
+        message = 'Something went wrong on the server. Please try again later.';
     }
-    return throwError(() => new Error('Something bad happened; please try again later.'));
 
+    console.error(`HTTP ${error.status} from ${error.url}`, error);
+    return throwError(() => new Error(message));
   }
 }
