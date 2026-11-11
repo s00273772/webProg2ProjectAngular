@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
-import { Trail, TrailList, CreateTrailDto } from '../models/trail.model';
+import { Trail, TrailList, CreateTrailDto, UpdateTrailDto } from '../models/trail.model';
 import { map } from 'rxjs';
 import { throwError } from 'rxjs';
 
@@ -35,6 +35,15 @@ export class TrailService {
       catchError((err) => this.handleError(err))
     )
   }
+
+  updateTrail(id: string, changes: UpdateTrailDto): Observable<Trail>{
+    return this.http.put<Trail>(`${this.apiUrl}/${id}`, changes)
+  }
+
+  deleteTrail(id: string): Observable<void> {
+      return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
 
   private handleError(error: HttpErrorResponse): Observable<never>{
     let message: string;

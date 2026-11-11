@@ -18,6 +18,11 @@
             @else if(trailForm.controls.trailName.hasError('minlength')){
                 <mat-error>Trail name must be at least one character</mat-error>
             }
+
+            @if (trailForm.controls.trailName.hasError('blank')) {
+                <mat-error>Trail name cannot be only spaces</mat-error>
+            }
+
         </mat-form-field>
     </div>
 
@@ -50,6 +55,10 @@
             @else if(trailForm.controls.country.hasError('minlength')){
                 <mat-error>Country must be at least one character</mat-error>
             }
+
+            @if (trailForm.controls.country.hasError('blank')) {
+                <mat-error>Country cannot be only spaces</mat-error>
+            }
         </mat-form-field>
     </div>
 
@@ -75,8 +84,8 @@
 
     <div class="button-group">
         <button matButton="filled" type="Submit" [disabled]="saving()  || trailForm.invalid">
-            {{ saving() ? 'Saving...' : 'Save new trail'}}</button>
-            <a matButton routerLink="/trails">Cancel</a>
+            {{ saving() ? 'Saving...' : 'Save trail'}}</button>
+            <a matButton [routerLink]="id() ? ['/trails', id()] : ['/trails']">Cancel</a>
     </div>
 
 </form>

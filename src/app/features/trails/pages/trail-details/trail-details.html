@@ -10,7 +10,16 @@
   <h2>{{ s.data.trailName }}</h2>
   <p>Country: {{ s.data.country }}</p>
   <p>Difficulty level: {{ s.data.difficultyLevel }}</p>
-  @if(s.data.locationCoordinates){
-    <p>Location coordinates: {{s.data.locationCoordinates.coordinates}}</p>
+  @if(s.data.locationCoordinates?.coordinates?.[0] !== 0){
+    <p>Location coordinates: {{s.data.locationCoordinates?.coordinates}}</p>
   }
+  <a matButton="filled" [routerLink]="['/trails', s.data._id, 'edit']">Edit trail</a>
+  <button matButton="outlined" (click)="deleteTrail(s.data)" [disabled]="deleting()">
+    Delete
+  </button>
+
+  @if(deleteError(); as message){
+    <p class="error">{{message}}</p>
+  }
+
 }

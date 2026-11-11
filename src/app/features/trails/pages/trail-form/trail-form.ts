@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CreateTrailDto, Trail } from '../../models/trail.model';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -12,6 +12,8 @@ import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { input } from '@angular/core';
+import { notBlank } from '../../../../shared/validators/not-blank.validator';
 
 @Component({
   selector: 'app-trail-form',
@@ -23,7 +25,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 //I had to use ChatGPT to help me figure out how to include the locationCoordinates in the form
-export class TrailForm {
+export class TrailForm implements OnInit {
   private formBuilder = inject(FormBuilder);
   private trailService = inject(TrailService);
   private router = inject(Router);
@@ -33,17 +35,32 @@ export class TrailForm {
   saving = signal(false);
   saveError = signal<string | null>(null);
 
+  readonly id = input<string>();
+
+  ngOnInit(): void {
+    const id = this.id();
+    if (!id) return; 
+
+    this.trailService.getTrailById(id).subscribe({
+      next: (trail) =>
+        this.trailForm.patchValue({ trailName: trail.trailName, country: trail.country, difficultyLevel: trail.difficultyLevel, longitude: trail.locationCoordinates?.coordinates[0] ?? null, latitude: trail.locationCoordinates?.coordinates[1] ?? null }),
+      error: (err: Error) => this.saveError.set(err.message),
+    });
+  }
+
+
   trailForm = this.formBuilder.nonNullable.group({
-    trailName: ['', [Validators.required, Validators.minLength(1)]],
+    trailName: ['', [Validators.required, Validators.minLength(1), notBlank]],
     longitude: this.formBuilder.control<number | null>(null),
     latitude: this.formBuilder.control<number | null>(null),
-    country: ['', [Validators.required, Validators.minLength(1)]],
+    country: ['', [Validators.required, Validators.minLength(1), notBlank]],
     difficultyLevel: ['', [Validators.required]]
   });
 
   //I asked ChatGPT how to save locationCoordinates using the form
   //use lat and long and set values in on submit using trailForm.value
   onSubmit(): void{
+    
     
     const {trailName, latitude, longitude, country, difficultyLevel} = this.trailForm.getRawValue();
     
@@ -66,7 +83,12 @@ export class TrailForm {
 
     this.trailForm.disable();
 
-    this.trailService.addTrail(newTrail).subscribe({
+    const id = this.id();
+    const request = id
+    ? this.trailService.updateTrail(id, newTrail)
+    : this.trailService.addTrail(newTrail);
+    
+    request.subscribe({
       next: (response) => {
         this.snackBar.open(`${newTrail.trailName} ${newTrail.country} saved`, 'Close', {
           duration: 10000

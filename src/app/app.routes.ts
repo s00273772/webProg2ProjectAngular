@@ -22,4 +22,8 @@ export const routes: Routes = [
         path: 'trails/:id',
         component: TrailDetails
     },
+    {
+        path: 'trails/:id/edit',
+        component: TrailForm
+    },
 ];

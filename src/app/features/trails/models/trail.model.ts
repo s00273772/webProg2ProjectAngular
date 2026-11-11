@@ -1,5 +1,5 @@
 export interface Trail {
-    _id?:string;
+    _id:string;
     trailName: string;
     locationCoordinates?: {
         type: "Point";
@@ -10,6 +10,16 @@ export interface Trail {
 }
 
 export interface CreateTrailDto{
+    trailName: string;
+    locationCoordinates?: {
+        type: "Point";
+        coordinates: [number, number] 
+    };
+    country: string;
+    difficultyLevel: string;
+}
+
+export interface UpdateTrailDto{
     trailName: string;
     locationCoordinates?: {
         type: "Point";

@@ -8,6 +8,7 @@ import { TrailCard } from '../trail-card/trail-card';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { withLoadState } from '../../../../shared/load-state';
 
+
 @Component({
   selector: 'app-trail-list',
   imports: [AsyncPipe, TrailCard],
