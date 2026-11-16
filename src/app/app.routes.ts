@@ -5,6 +5,7 @@ import { TrailForm } from './features/trails/pages/trail-form/trail-form';
 import { HikerList } from './features/hikers/pages/hiker-list/hiker-list';
 import { HikerDetails } from './features/hikers/pages/hiker-details/hiker-details';
 import { HikerForm } from './features/hikers/pages/hiker-form/hiker-form';
+import { HikerTrailList } from './features/hikerTrails/pages/hiker-trail-list/hiker-trail-list';
 
 
 export const routes: Routes = [
@@ -45,5 +46,13 @@ export const routes: Routes = [
     {
         path: 'hikers/:id/edit',
         component: HikerForm
+    },
+    {
+        path: 'hikerTrails',
+        component: HikerTrailList
+    },
+    {
+        path:'hikerTrails/new',
+        component: HikerTrailForm
     },
 ];

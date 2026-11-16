@@ -1,0 +1,19 @@
+<div class="hiker-trail-list-container">
+    <h2>Hiker Trail List</h2>
+    
+    @let s = state();
+  @if (s.status === 'loading') {
+    <p>Loading hiker trails...</p>
+  } @else if (s.status === 'error') {
+    <p> {{ s.message }}</p>
+  } @else if (s.data.length === 0) {
+    <p>No hiker trails available at the moment.</p>
+  } @else {
+    <div class="grid">
+      @for (hikerTrail of s.data; track hikerTrail._id) {
+        <app-hiker-trail-card [hikerTrail]="hikerTrail" />
+      }
+    </div>
+  }
+
+</div>

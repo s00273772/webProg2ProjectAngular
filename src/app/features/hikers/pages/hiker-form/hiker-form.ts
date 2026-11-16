@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Hiker, CreateHikerDto } from '../../models/hiker.model';
+import { CreateHikerDto } from '../../models/hiker.model';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink} from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';

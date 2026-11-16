@@ -2,7 +2,6 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
 import { Hiker, CreateHikerDto, UpdateHikerDto } from '../models/hiker.model';
-import { map } from 'rxjs';
 import { throwError } from 'rxjs';
 
 @Injectable({
