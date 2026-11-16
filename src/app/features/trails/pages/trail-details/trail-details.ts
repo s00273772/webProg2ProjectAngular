@@ -1,8 +1,7 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
 import { TrailService } from '../../services/trail.service';
 import { Trail } from '../../models/trail.model';
-import { Observable, switchMap } from 'rxjs';
+import { switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { input } from '@angular/core';
 import { LoadState } from '../../../../shared/load-state';

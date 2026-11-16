@@ -1,0 +1,25 @@
+<h2>Hiker Details</h2>
+
+
+@let s = state();
+@if (s.status === 'loading') {
+  <p>Loading hiker details...</p>
+} @else if (s.status === 'error') {
+  <p >{{ s.message }}</p>
+} @else {
+  <h2>{{ s.data.username }}</h2>
+  @if(s.data.country){
+    <p>Country: {{ s.data.country }}</p>
+  }
+  <p>Email: {{ s.data.email }}</p>
+  <a matButton="filled" [routerLink]="['/hikers', s.data._id, 'edit']">Edit hiker</a>
+  <button matButton="outlined" (click)="deleteHiker(s.data)" [disabled]="deleting()">
+    Delete
+  </button>
+
+  @if(deleteError(); as message){
+    <p class="error">{{message}}</p>
+  }
+
+}
+

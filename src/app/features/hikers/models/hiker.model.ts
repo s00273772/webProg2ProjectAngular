@@ -10,12 +10,12 @@ export interface CreateHikerDto{
     username: string;
     email: string;
     password: string;
-    country: string;
+    country?: string;
 }
 
 export interface UpdateHikerDto{
     username: string;
     email: string;
     password: string;
-    country: string;
+    country?: string;
 }

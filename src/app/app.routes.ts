@@ -2,6 +2,10 @@ import { Routes } from '@angular/router';
 import { TrailList } from './features/trails/pages/trail-list/trail-list';
 import { TrailDetails } from './features/trails/pages/trail-details/trail-details';
 import { TrailForm } from './features/trails/pages/trail-form/trail-form';
+import { HikerList } from './features/hikers/pages/hiker-list/hiker-list';
+import { HikerDetails } from './features/hikers/pages/hiker-details/hiker-details';
+import { HikerForm } from './features/hikers/pages/hiker-form/hiker-form';
+
 
 export const routes: Routes = [
 
@@ -25,5 +29,21 @@ export const routes: Routes = [
     {
         path: 'trails/:id/edit',
         component: TrailForm
+    },
+    {
+        path: 'hikers',
+        component: HikerList
+    },
+    {
+        path:'hikers/new',
+        component: HikerForm
+    },
+    {
+        path: 'hikers/:id',
+        component: HikerDetails
+    },
+    {
+        path: 'hikers/:id/edit',
+        component: HikerForm
     },
 ];

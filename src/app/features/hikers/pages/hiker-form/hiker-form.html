@@ -1,0 +1,99 @@
+<form [formGroup]="hikerForm" (ngSubmit)="onSubmit()" class="hiker-form">
+    @if (saving()){
+        <mat-progress-bar mode="buffer"/>
+    }
+
+    <h2>Hiker Details Form</h2>
+
+    <!--Username Field-->
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" placeholder="e.g. iLikeToHike"/>
+            
+            @if(hikerForm.controls.username.hasError('required')){
+                <mat-error>Username is required</mat-error>
+            }
+            @else if(hikerForm.controls.username.hasError('minlength')){
+                <mat-error>Username must be at least 1 character long</mat-error>
+            }
+            @else if(hikerForm.controls.username.hasError('maxlength')){
+                <mat-error>Username must be 30 characters or fewer</mat-error>
+            }
+
+            @if(hikerForm.controls.username.hasError('blank')){
+                <mat-error>Username cannot only be spaces</mat-error>
+            }
+            
+        </mat-form-field>
+    </div>
+
+    <!--Email Field-->
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" placeholder="e.g. hiker@gmail.com"/>
+
+            @if(hikerForm.controls.email.hasError('required')){
+                <mat-error>Email is required</mat-error>
+            }
+            
+            @if(hikerForm.controls.email.hasError('blank')){
+                <mat-error>Email cannot only be spaces</mat-error>
+            }
+        </mat-form-field>
+    </div>
+
+     <!--Password Field-->
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" placeholder="e.g. min 8 characters, max 20"/>
+
+            @if(hikerForm.controls.password.hasError('required')){
+                <mat-error>Password is required</mat-error>
+            }
+            @else if(hikerForm.controls.password.hasError('minlength')){
+                <mat-error>Password must be at least 8 characters long</mat-error>
+            }
+            @else if(hikerForm.controls.password.hasError('maxlength')){
+                <mat-error>Username must be 20 characters or fewer</mat-error>
+            }
+            
+            @if(hikerForm.controls.password.hasError('blank')){
+                <mat-error>Password cannot only be spaces</mat-error>
+            }
+        </mat-form-field>
+    </div>
+    
+
+    <!--Country Field-->
+    <div class="form-group">
+        <mat-form-field appearance="outline">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="country">
+                <mat-option value="">No country selected</mat-option>
+                <mat-option value="Ireland">Ireland</mat-option>
+                <mat-option value="England">England</mat-option>
+                <mat-option value="Scotland">Scotland</mat-option>
+                <mat-option value="Wales">Wales</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+
+    <!--Action Buttons-->
+    @if(saveError(); as message){ 
+        <p role="alert">{{message}}</p>
+    }
+    
+    <div class="button-group">
+        <button matButton="filled" type="submit" [disabled]="saving() || hikerForm.invalid">
+            {{saving() ? 'Saving...' : 'Save hiker'}}
+        </button>
+        <p></p>
+        <a matButton routerLink="/hikers">Cancel</a>
+    </div>
+    
+    
+</form>
