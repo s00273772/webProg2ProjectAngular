@@ -6,6 +6,7 @@ import { HikerList } from './features/hikers/pages/hiker-list/hiker-list';
 import { HikerDetails } from './features/hikers/pages/hiker-details/hiker-details';
 import { HikerForm } from './features/hikers/pages/hiker-form/hiker-form';
 import { HikerTrailList } from './features/hikerTrails/pages/hiker-trail-list/hiker-trail-list';
+import { HikerTrailForm } from './features/hikerTrails/pages/hiker-trail-form/hiker-trail-form';
 
 
 export const routes: Routes = [
