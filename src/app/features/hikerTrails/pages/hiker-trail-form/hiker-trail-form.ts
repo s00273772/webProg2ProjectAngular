@@ -13,10 +13,11 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { input } from '@angular/core';
 import { HikerTrailService } from '../../services/hiker-trail.service';
+import { notBlank } from '../../../../shared/validators/not-blank.validator';
 
 @Component({
   selector: 'app-hiker-trail-form',
-  imports: [ReactiveFormsModule, RouterLink, MatProgressBarModule, MatSelect, MatOption, MatButtonModule, MatFormFieldModule, MatInputModule, MatCardModule],
+  imports: [ReactiveFormsModule, RouterLink,  MatProgressBarModule, MatSelect, MatOption, MatButtonModule, MatFormFieldModule, MatInputModule, MatCardModule],
   templateUrl: './hiker-trail-form.html',
   styleUrl: './hiker-trail-form.scss',
 })
@@ -36,17 +37,18 @@ export class HikerTrailForm {
       const id = this.id();
       if (!id) return;
   
+      //Had to ask ChatGPT how to format the date so when editing, the form is not populated with the time
       this.hikerTrailService.getHikerTrailById(id).subscribe({
         next: (hikerTrail) =>
-          this.hikerTrailForm.patchValue({trail: hikerTrail.trail, hiker: hikerTrail.hiker, dateHiked: hikerTrail.dateHiked, rating: hikerTrail.rating ?? undefined, picture: hikerTrail.picture ?? ""}),
+          this.hikerTrailForm.patchValue({trail: hikerTrail.trail, hiker: hikerTrail.hiker, dateHiked: hikerTrail.dateHiked ? hikerTrail.dateHiked.split('T')[0]: '', rating: hikerTrail.rating ?? undefined, picture: hikerTrail.picture ?? ""}),
         error: (err: Error) => this.saveError.set(err.message),
       });
     }
   
     hikerTrailForm = this.formBuilder.nonNullable.group({
-      trail: ['', [Validators.required]],
-      hiker: ['', [Validators.required,]],
-      dateHiked: ['', [Validators.required]],
+      trail: ['', [Validators.required, notBlank]],
+      hiker: ['', [Validators.required, notBlank]],
+      dateHiked: ['', [Validators.required, notBlank]],
       rating: this.formBuilder.control<number | null>(null, [Validators.min(1),
         Validators.max(5),
       ]),

@@ -22,3 +22,7 @@ export interface UpdateHikerTrailDto{
     rating?: number;
     picture?: string;
 }
+
+export interface HikerTrailList{
+    hikerTrails: HikerTrail[];
+}

@@ -1,1 +1,97 @@
-<p>hiker-trail-form works!</p>
+<form [formGroup]="hikerTrailForm" (ngSubmit)="onSubmit()" class="hiker-trail-form">
+    @if (saving()){
+        <mat-progress-bar mode="buffer"/>
+    }
+
+    <h2>Hiker Trail Details Form</h2>
+
+    <!--Trail Field-->
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-label>Trail ID</mat-label>
+            <input matInput formControlName="trail" placeholder="e.g. 1234A"/>
+            
+            @if(hikerTrailForm.controls.trail.hasError('required')){
+                <mat-error>Trail ID is required</mat-error>
+            }
+
+            @if(hikerTrailForm.controls.trail.hasError('blank')){
+                <mat-error>Trail ID cannot only be spaces</mat-error>
+            }
+            
+        </mat-form-field>
+    </div>
+
+    <!--Hiker Field-->
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-label>Hiker ID</mat-label>
+            <input matInput formControlName="hiker" placeholder="e.g. 5768B"/>
+            
+            @if(hikerTrailForm.controls.hiker.hasError('required')){
+                <mat-error>Hiker ID is required</mat-error>
+            }
+
+            @if(hikerTrailForm.controls.hiker.hasError('blank')){
+                <mat-error>Hiker ID cannot only be spaces</mat-error>
+            }
+            
+        </mat-form-field>
+    </div>
+
+    <!--DateHiked Field-->
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-label>Date Hiked</mat-label>
+            <input matInput formControlName="dateHiked" placeholder="e.g. 2026-11-17"/>
+            
+            @if(hikerTrailForm.controls.dateHiked.hasError('required')){
+                <mat-error>Date hiked is required</mat-error>
+            }
+
+            @if(hikerTrailForm.controls.dateHiked.hasError('blank')){
+                <mat-error>Date hiked cannot only be spaces</mat-error>
+            }
+            
+        </mat-form-field>
+    </div>
+
+    <!--Rating Field-->
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-label>Rating</mat-label>
+            <mat-select formControlName="rating">
+                <mat-option [value]="1">1</mat-option>
+                <mat-option [value]="2">2</mat-option>
+                <mat-option [value]="3">3</mat-option>
+                <mat-option [value]="4">4</mat-option>
+                <mat-option [value]="5">5</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+     <!--Picture Field-->
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-label>Picture URL</mat-label>
+            <input matInput formControlName="picture"/>
+        </mat-form-field>
+    </div>
+    
+
+
+    <!--Action Buttons-->
+    @if(saveError(); as message){ 
+        <p role="alert">{{message}}</p>
+    }
+    
+    <div class="button-group">
+        <button matButton="filled" type="submit" [disabled]="saving() || hikerTrailForm.invalid">
+            {{saving() ? 'Saving...' : 'Save hiker'}}
+        </button>
+        <p></p>
+        <a matButton routerLink="/hikers">Cancel</a>
+    </div>
+    
+    
+</form>

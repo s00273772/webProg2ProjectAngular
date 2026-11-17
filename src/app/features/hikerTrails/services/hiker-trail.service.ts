@@ -1,7 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
-import { HikerTrail, CreateHikerTrailDto, UpdateHikerTrailDto } from '../models/hikerTrail';
+import { HikerTrail, HikerTrailList, CreateHikerTrailDto, UpdateHikerTrailDto } from '../models/hikerTrail';
+import { map } from 'rxjs';
 import { throwError } from 'rxjs';
 
 @Injectable({
@@ -16,7 +17,10 @@ export class HikerTrailService {
     
     getHikerTrails(): Observable<HikerTrail[]>{
       return this.http
-      .get<HikerTrail[]>(this.apiUrl);
+      .get<HikerTrailList>(this.apiUrl)
+      .pipe(
+            map(response => response.hikerTrails),
+            catchError((err) => this.handleError(err)));;
     }
   
     getHikerTrailById(id: string): Observable<HikerTrail>{

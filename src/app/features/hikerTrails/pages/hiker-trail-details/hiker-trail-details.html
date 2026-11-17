@@ -1,0 +1,30 @@
+<h2>Hiker Trail Details</h2>
+
+
+@let s = state();
+@if (s.status === 'loading') {
+  <p>Loading hikerTrail details...</p>
+} @else if (s.status === 'error') {
+  <p >{{ s.message }}</p>
+} @else {
+  <h2>{{ s.data.trail }}</h2>
+  <h2>{{ s.data.hiker }}</h2>
+  <p>Date hiked: {{ s.data.dateHiked }}</p>
+  @if(s.data.rating){
+    <p>Country: {{ s.data.rating }}</p>
+  }
+  @if(s.data.picture){
+    <p>Country: {{ s.data.picture }}</p>
+  }
+  <a matButton="filled" [routerLink]="['/hikerTrails', s.data._id, 'edit']">Edit hiker trail</a>
+  <button matButton="outlined" (click)="deleteHikerTrail(s.data)" [disabled]="deleting()">
+    Delete
+  </button>
+
+  @if(deleteError(); as message){
+    <p class="error">{{message}}</p>
+  }
+
+}
+
+
