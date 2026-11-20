@@ -39,19 +39,25 @@
         </mat-form-field>
     </div>
 
+    <!--I used angular Material documentation to implement the datepicker-->
     <!--DateHiked Field-->
     <div>
         <mat-form-field appearance="outline">
             <mat-label>Date Hiked</mat-label>
-            <input matInput formControlName="dateHiked" placeholder="e.g. 2026-11-17"/>
+            <!--<input matInput formControlName="dateHiked" placeholder="e.g. 2026-11-17"/>-->
             
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dateHiked" formControlName="dateHiked" placeholder="DD/MM/YYYY">
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="dateHiked"></mat-datepicker-toggle>
+            <mat-datepicker #dateHiked></mat-datepicker>
+
             @if(hikerTrailForm.controls.dateHiked.hasError('required')){
                 <mat-error>Date hiked is required</mat-error>
             }
 
-            @if(hikerTrailForm.controls.dateHiked.hasError('blank')){
+           <!-- @if(hikerTrailForm.controls.dateHiked.hasError('blank')){
                 <mat-error>Date hiked cannot only be spaces</mat-error>
-            }
+            }-->
             
         </mat-form-field>
     </div>

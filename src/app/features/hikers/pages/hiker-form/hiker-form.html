@@ -32,7 +32,7 @@
     <div>
         <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
-            <input matInput formControlName="email" placeholder="e.g. hiker@gmail.com"/>
+            <input matInput type="email" formControlName="email" placeholder="e.g. hiker@gmail.com"/>
 
             @if(hikerForm.controls.email.hasError('required')){
                 <mat-error>Email is required</mat-error>

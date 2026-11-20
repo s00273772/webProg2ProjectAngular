@@ -11,22 +11,30 @@ import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { input } from '@angular/core';
 import { HikerTrailService } from '../../services/hiker-trail.service';
 import { notBlank } from '../../../../shared/validators/not-blank.validator';
 
 @Component({
   selector: 'app-hiker-trail-form',
-  imports: [ReactiveFormsModule, RouterLink,  MatProgressBarModule, MatSelect, MatOption, MatButtonModule, MatFormFieldModule, MatInputModule, MatCardModule],
+  imports: [ReactiveFormsModule, RouterLink, MatDatepickerModule, MatNativeDateModule, MatProgressBarModule, MatSelect, MatOption, MatButtonModule, MatFormFieldModule, MatInputModule, MatCardModule],
   templateUrl: './hiker-trail-form.html',
   styleUrl: './hiker-trail-form.scss',
 })
+
+
 
 export class HikerTrailForm {
    private formBuilder = inject(FormBuilder);
     private hikerTrailService = inject(HikerTrailService);
     private router = inject(Router);
     private snackBar = inject(MatSnackBar);
+
+    private readonly _currentYear = new Date().getFullYear();
+    readonly minDate = new Date(this._currentYear - 20, 0, 1);
+    readonly maxDate = new Date();
   
     saving = signal(false);
     saveError = signal<string | null>(null);
@@ -40,7 +48,7 @@ export class HikerTrailForm {
       //Had to ask ChatGPT how to format the date so when editing, the form is not populated with the time
       this.hikerTrailService.getHikerTrailById(id).subscribe({
         next: (hikerTrail) =>
-          this.hikerTrailForm.patchValue({trail: hikerTrail.trail, hiker: hikerTrail.hiker, dateHiked: hikerTrail.dateHiked ? hikerTrail.dateHiked.split('T')[0]: '', rating: hikerTrail.rating ?? undefined, picture: hikerTrail.picture ?? ""}),
+          this.hikerTrailForm.patchValue({trail: hikerTrail.trail, hiker: hikerTrail.hiker, dateHiked: hikerTrail.dateHiked, rating: hikerTrail.rating ?? undefined, picture: hikerTrail.picture ?? ""}),
         error: (err: Error) => this.saveError.set(err.message),
       });
     }
@@ -48,7 +56,7 @@ export class HikerTrailForm {
     hikerTrailForm = this.formBuilder.nonNullable.group({
       trail: ['', [Validators.required, notBlank]],
       hiker: ['', [Validators.required, notBlank]],
-      dateHiked: ['', [Validators.required, notBlank]],
+      dateHiked: [new Date(), [Validators.required]],
       rating: this.formBuilder.control<number | null>(null, [Validators.min(1),
         Validators.max(5),
       ]),
@@ -57,8 +65,12 @@ export class HikerTrailForm {
   
     onSubmit(): void{
       const {trail, hiker, dateHiked, rating, picture} = this.hikerTrailForm.getRawValue();
-      const newHikerTrail: CreateHikerTrailDto = {trail, hiker, dateHiked, rating: rating ?? undefined, picture: picture ?? ""};
-      
+      const newHikerTrail: CreateHikerTrailDto = {trail, hiker, 
+        dateHiked: [
+          dateHiked.getFullYear(),
+          String(dateHiked.getMonth() + 1).padStart(2,'0'),
+          String(dateHiked.getDate()).padStart(2, '0')].join('-'), 
+        rating: rating ?? undefined, picture: picture ?? ""};
       
       this.saving.set(true);
       this.saveError.set(null);

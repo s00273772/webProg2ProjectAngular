@@ -2,7 +2,7 @@ export interface HikerTrail {
     _id:string;
     trail: string;
     hiker: string;
-    dateHiked: string;
+    dateHiked: Date;
     rating: number;
     picture?: string;
 }
