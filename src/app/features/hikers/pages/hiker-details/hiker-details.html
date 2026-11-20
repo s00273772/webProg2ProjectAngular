@@ -1,6 +1,8 @@
+<div class="trailForm">
 <h2>Hiker Details</h2>
 
-
+<mat-card class="details-card">
+<mat-card-content>
 @let s = state();
 @if (s.status === 'loading') {
   <p>Loading hiker details...</p>
@@ -22,4 +24,6 @@
   }
 
 }
-
+</mat-card-content>
+</mat-card>
+</div>

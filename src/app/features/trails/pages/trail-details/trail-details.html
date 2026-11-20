@@ -1,6 +1,7 @@
 <h2>Trail Details</h2>
 
-
+<mat-card class="details-card">
+<mat-card-content>
 @let s = state();
 @if (s.status === 'loading') {
   <p>Loading trail details...</p>
@@ -14,6 +15,7 @@
     <p>Location coordinates: {{s.data.locationCoordinates?.coordinates}}</p>
   }
   <a matButton="filled" [routerLink]="['/trails', s.data._id, 'edit']">Edit trail</a>
+  <a matButton="filled" [routerLink]="['/hikerTrails/new']">Log a hike for this trail</a>
   <button matButton="outlined" (click)="deleteTrail(s.data)" [disabled]="deleting()">
     Delete
   </button>
@@ -23,3 +25,5 @@
   }
 
 }
+</mat-card-content>
+</mat-card>

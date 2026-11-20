@@ -2,10 +2,11 @@ import { Component, input } from '@angular/core';
 import { Trail } from '../../models/trail.model';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-trail-card',
-  imports: [RouterLink, MatButtonModule],
+  imports: [RouterLink, MatButtonModule, MatCardModule],
   templateUrl: './trail-card.html',
   styleUrl: './trail-card.scss',
 })

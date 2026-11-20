@@ -1,7 +1,9 @@
-<div class="card">
-    <h3>
+<mat-card class="card">
+    <mat-card-content>
+    <h2>
         {{hikerTrail().trail}} 
-    </h3>
+    </h2>
+    </mat-card-content>
 
-    <a matButton [routerLink]="['/hikerTrails', hikerTrail()._id]">View hiker trail details</a>
-</div>
+    <a matButton [routerLink]="['/hikerTrails', hikerTrail()._id]">View hike details</a>
+</mat-card>

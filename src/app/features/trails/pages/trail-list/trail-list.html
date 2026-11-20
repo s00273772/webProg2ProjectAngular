@@ -1,5 +1,6 @@
+<h2>Trail List</h2>
+
 <div class="trail-list-container">
-    <h2>Trail List</h2>
     
     @let s = state();
   @if (s.status === 'loading') {
@@ -9,11 +10,9 @@
   } @else if (s.data.length === 0) {
     <p>No trails available at the moment.</p>
   } @else {
-    <div class="grid">
       @for (trail of s.data; track trail._id) {
         <app-trail-card [trail]="trail" />
       }
-    </div>
   }
 
 </div>

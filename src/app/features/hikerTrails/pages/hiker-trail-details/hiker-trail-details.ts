@@ -9,10 +9,11 @@ import { withLoadState } from '../../../../shared/load-state';
 import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { HikerTrail } from '../../models/hikerTrail';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-hiker-trail-details',
-  imports: [AsyncPipe, RouterLink, MatButtonModule],
+  imports: [AsyncPipe, RouterLink, MatButtonModule, MatCardModule],
   templateUrl: './hiker-trail-details.html',
   styleUrl: './hiker-trail-details.scss',
 })

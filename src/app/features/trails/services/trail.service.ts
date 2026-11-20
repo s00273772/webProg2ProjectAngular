@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
 import { Trail, TrailList, CreateTrailDto, UpdateTrailDto } from '../models/trail.model';
 import { map } from 'rxjs';
@@ -14,6 +14,7 @@ export class TrailService {
 
   //should be read from an env variable
   private apiUrl = 'http://localhost:3000/api/v1/trails';
+  
 
   //ChatGPT needed to create an interface for the trails object as the trails are stored inside a trails object
   getTrails(): Observable<Trail[]>{

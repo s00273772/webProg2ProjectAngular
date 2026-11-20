@@ -9,10 +9,11 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { withLoadState } from '../../../../shared/load-state';
 import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-trail-details',
-  imports: [AsyncPipe, RouterLink, MatButtonModule],
+  imports: [AsyncPipe, RouterLink, MatButtonModule, MatCardModule],
   templateUrl: './trail-details.html',
   styleUrl: './trail-details.scss',
 })

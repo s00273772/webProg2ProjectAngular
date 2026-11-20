@@ -1,7 +1,10 @@
-<div class="card">
-    <h3>
+<mat-card class="card">
+    <mat-card-content>
+        <h2 class="centreHeading">
         {{trail().trailName}} 
-    </h3>
+    </h2>
+    </mat-card-content>
+    
 
     <a matButton [routerLink]="['/trails', trail()._id]">View trail details</a>
-</div>
+</mat-card>
