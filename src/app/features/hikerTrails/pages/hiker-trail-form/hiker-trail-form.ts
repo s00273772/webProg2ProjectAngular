@@ -45,7 +45,7 @@ export class HikerTrailForm {
       const id = this.id();
       if (!id) return;
   
-      //Had to ask ChatGPT how to format the date so when editing, the form is not populated with the time
+      //Had to ask ChatGPT how to format dateHiked to send it to the backend in the correct format
       this.hikerTrailService.getHikerTrailById(id).subscribe({
         next: (hikerTrail) =>
           this.hikerTrailForm.patchValue({trail: hikerTrail.trail, hiker: hikerTrail.hiker, dateHiked: hikerTrail.dateHiked, rating: hikerTrail.rating ?? undefined, picture: hikerTrail.picture ?? ""}),

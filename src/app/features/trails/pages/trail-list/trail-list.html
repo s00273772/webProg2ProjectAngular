@@ -1,5 +1,17 @@
 <h2>Trail List</h2>
 
+<!--Youtube video-->
+<form [formGroup]="filterTrailsForm">
+<mat-form-field>
+  <mat-label>Trail Name</mat-label>
+  <mat-select formControlName="trailName" (selectionChange)="trailNameChanged()">
+    <mat-option value="">All</mat-option>
+    <mat-option value="Knocknarea">Knocknarea</mat-option>
+    <mat-option value="The Coomlough Horseshoe">The Coomlough Horseshoe</mat-option>
+  </mat-select>
+</mat-form-field>
+</form>
+
 <div class="trail-list-container">
     
     @let s = state();

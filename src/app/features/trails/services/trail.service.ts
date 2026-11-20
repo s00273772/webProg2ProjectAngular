@@ -1,9 +1,10 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
 import { Trail, TrailList, CreateTrailDto, UpdateTrailDto } from '../models/trail.model';
 import { map } from 'rxjs';
 import { throwError } from 'rxjs';
+
 
 
 @Injectable({
@@ -17,8 +18,18 @@ export class TrailService {
   
 
   //ChatGPT needed to create an interface for the trails object as the trails are stored inside a trails object
+  //Angular documentation for HttpParams
+  
+  //getTrails(filter? : string): Observable<Trail[]>{
   getTrails(): Observable<Trail[]>{
+    /* const baseParams = new HttpParams().set('trailName', 'Knocknarea');
+    let baseParams = new HttpParams('trailName', 'Knocknarea');
+    if (filter){
+      baseParams = baseParams.set('trailName', filter)
+    } */
+
     return this.http
+    // .get<TrailList>(this.apiUrl, {params: baseParams})
     .get<TrailList>(this.apiUrl)
     .pipe(
       map(response => response.trails),
