@@ -34,13 +34,15 @@ export class TrailList {
 
   trails = toSignal(this.trailService.getTrails());
 
-  //Youtube video 
+  //Youtube video
   trailNameChanged(){
    const trailName = this.filterTrailsForm.controls['trailName'].value;
     
     this.trailName.set(trailName);
   }
 
+  //I used ChatGPT to explain the state change for getTrailById in more detail
+  //then I implemented the same logic for filtering trails by trailName
   state = toSignal(
     toObservable(this.trailName)
     .pipe(

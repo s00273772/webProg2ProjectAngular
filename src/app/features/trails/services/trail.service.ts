@@ -19,7 +19,6 @@ export class TrailService {
 
   //ChatGPT needed to create an interface for the trails object as the trails are stored inside a trails object
   //Angular documentation for HttpParams
-  
   getTrails(filter? : string): Observable<Trail[]>{
     let baseParams = new HttpParams();
     if (filter){

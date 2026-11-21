@@ -66,6 +66,7 @@ export class HikerTrailForm {
     onSubmit(): void{
       const {trail, hiker, dateHiked, rating, picture} = this.hikerTrailForm.getRawValue();
       const newHikerTrail: CreateHikerTrailDto = {trail, hiker, 
+        //Had to ask ChatGPT how to format dateHiked to send it to the backend in the correct format
         dateHiked: [
           dateHiked.getFullYear(),
           String(dateHiked.getMonth() + 1).padStart(2,'0'),
