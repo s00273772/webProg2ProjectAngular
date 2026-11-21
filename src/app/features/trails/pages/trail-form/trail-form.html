@@ -47,18 +47,12 @@
     <div class="form-group">
         <mat-form-field appearance="outline">
             <mat-label>Country</mat-label>
-            <input matInput formControlName="country" placeholder="e.g. Ireland"/>
-            
-            @if(trailForm.controls.country.hasError('required')){
-                <mat-error>Country is required</mat-error>
-            }
-            @else if(trailForm.controls.country.hasError('minlength')){
-                <mat-error>Country must be at least one character</mat-error>
-            }
-
-            @if (trailForm.controls.country.hasError('blank')) {
-                <mat-error>Country cannot be only spaces</mat-error>
-            }
+            <mat-select formControlName="country">
+                <mat-option value="Ireland">Ireland</mat-option>
+                <mat-option value="England">England</mat-option>
+                <mat-option value="Scotland">Scotland</mat-option>
+                <mat-option value="Wales">Wales</mat-option>
+            </mat-select>
         </mat-form-field>
     </div>
 

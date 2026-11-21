@@ -53,7 +53,7 @@ export class TrailForm implements OnInit {
     trailName: ['', [Validators.required, Validators.minLength(1), notBlank]],
     longitude: this.formBuilder.control<number | null>(null),
     latitude: this.formBuilder.control<number | null>(null),
-    country: ['', [Validators.required, Validators.minLength(1), notBlank]],
+    country: this.formBuilder.control(''),
     difficultyLevel: ['', [Validators.required]]
   });
 

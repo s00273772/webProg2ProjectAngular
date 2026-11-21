@@ -48,7 +48,7 @@ export class HikerTrailForm {
       //Had to ask ChatGPT how to format dateHiked to send it to the backend in the correct format
       this.hikerTrailService.getHikerTrailById(id).subscribe({
         next: (hikerTrail) =>
-          this.hikerTrailForm.patchValue({trail: hikerTrail.trail, hiker: hikerTrail.hiker, dateHiked: hikerTrail.dateHiked, rating: hikerTrail.rating ?? undefined, picture: hikerTrail.picture ?? ""}),
+          this.hikerTrailForm.patchValue({trail: hikerTrail.trail, hiker: hikerTrail.hiker, dateHiked: new Date(hikerTrail.dateHiked), rating: hikerTrail.rating ?? undefined, picture: hikerTrail.picture ?? ""}),
         error: (err: Error) => this.saveError.set(err.message),
       });
     }
@@ -85,7 +85,7 @@ export class HikerTrailForm {
   
      request.subscribe({
         next: (response) => {
-          this.snackBar.open(`${newHikerTrail.trail} ${newHikerTrail.hiker} saved`, 'Close', {
+          this.snackBar.open(`${newHikerTrail.hiker} saved`, 'Close', {
             duration: 10000
           });
           console.log('HikerTrail added successfully:', response);
